@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 ruby '3.2.2'
 
-##-- base gems for rails --##
+# #-- base gems for rails --##
 gem 'rack-cors', '2.0.0', require: 'rack/cors'
 gem 'rails', '~> 7.0.8.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-##-- rails application helper gems --##
+# #-- rails application helper gems --##
 gem 'acts-as-taggable-on'
 gem 'attr_extras'
 gem 'browser'
@@ -23,7 +23,7 @@ gem 'tzinfo-data'
 gem 'valid_email2'
 # compress javascript config.assets.js_compressor
 gem 'uglifier'
-##-- used for single column multiple binary flags in notification settings/feature flagging --##
+# #-- used for single column multiple binary flags in notification settings/feature flagging --##
 gem 'flag_shih_tzu'
 # Random name generator for user names
 gem 'haikunator'
@@ -40,11 +40,11 @@ gem 'down'
 # authentication type to fetch and send mail over oauth2.0
 gem 'gmail_xoauth'
 # Lock net-smtp to 0.3.4 to avoid issues with gmail_xoauth2
-gem 'net-smtp',  '~> 0.3.4'
+gem 'net-smtp', '~> 0.3.4'
 # Prevent CSV injection
 gem 'csv-safe'
 
-##-- for active storage --##
+# #-- for active storage --##
 gem 'aws-sdk-s3', require: false
 # original gem isn't maintained actively
 # we wanted updated version of faraday which is a dependency for slack-ruby-client
@@ -52,7 +52,7 @@ gem 'azure-storage-blob', git: 'https://github.com/chatwoot/azure-storage-ruby',
 gem 'google-cloud-storage', require: false
 gem 'image_processing'
 
-##-- gems for database --#
+# #-- gems for database --#
 gem 'groupdate'
 gem 'pg'
 gem 'redis'
@@ -60,7 +60,7 @@ gem 'redis-namespace'
 # super fast record imports in bulk
 gem 'activerecord-import'
 
-##--- gems for server & infra configuration ---##
+# #--- gems for server & infra configuration ---##
 gem 'dotenv-rails'
 gem 'foreman'
 gem 'puma'
@@ -68,7 +68,7 @@ gem 'webpacker'
 # metrics on heroku
 gem 'barnes'
 
-##--- gems for authentication & authorization ---##
+# #--- gems for authentication & authorization ---##
 gem 'devise', '>= 4.9.4'
 gem 'devise-secure_password', git: 'https://github.com/chatwoot/devise-secure_password', branch: 'chatwoot'
 gem 'devise_token_auth', '>= 1.2.3'
@@ -80,11 +80,11 @@ gem 'administrate', '>= 0.20.1'
 gem 'administrate-field-active_storage', '>= 1.0.2'
 gem 'administrate-field-belongs_to_search', '>= 0.9.0'
 
-##--- gems for pubsub service ---##
+# #--- gems for pubsub service ---##
 # https://karolgalanciak.com/blog/2019/11/30/from-activerecord-callbacks-to-publish-slash-subscribe-pattern-and-event-driven-design/
 gem 'wisper', '2.0.0'
 
-##--- gems for channels ---##
+# #--- gems for channels ---##
 gem 'facebook-messenger'
 gem 'line-bot-api'
 gem 'twilio-ruby', '~> 5.66'
@@ -103,7 +103,7 @@ gem 'grpc'
 # this dependency breaks the slack-ruby-client gem
 gem 'google-cloud-translate-v3'
 
-##-- apm and error monitoring ---#
+# #-- apm and error monitoring ---#
 # loaded only when environment variables are set.
 # ref application.rb
 gem 'ddtrace', require: false
@@ -115,16 +115,16 @@ gem 'sentry-rails', '>= 5.14.0', require: false
 gem 'sentry-ruby', require: false
 gem 'sentry-sidekiq', '>= 5.15.0', require: false
 
-##-- background job processing --##
+# #-- background job processing --##
 gem 'sidekiq', '>= 7.2.4'
 # We want cron jobs
 gem 'sidekiq-cron', '>= 1.12.0'
 
-##-- Push notification service --##
+# #-- Push notification service --##
 gem 'fcm'
 gem 'web-push'
 
-##-- geocoding / parse location from ip --##
+# #-- geocoding / parse location from ip --##
 # http://www.rubygeocoder.com/
 gem 'geocoder'
 # to parse maxmind db
@@ -216,7 +216,7 @@ end
 
 group :development, :test do
   gem 'active_record_query_trace'
-  ##--- gems for debugging and error reporting ---##
+  # #--- gems for debugging and error reporting ---##
   # static analysis
   gem 'brakeman'
   gem 'bundle-audit', require: false
@@ -236,6 +236,7 @@ group :development, :test do
   gem 'seed_dump'
   gem 'shoulda-matchers'
   gem 'simplecov', '0.17.1', require: false
+  gem 'solargraph'
   gem 'spring'
   gem 'spring-watcher-listen'
 end
