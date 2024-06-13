@@ -139,6 +139,12 @@ GEM
     aws-sdk-kms (1.64.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-lexmodelsv2 (1.32.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-lexruntimev2 (1.19.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-s3 (1.122.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
@@ -842,6 +848,8 @@ DEPENDENCIES
   annotate
   attr_extras
   audited (~> 5.4, >= 5.4.1)
+  aws-sdk-lexmodelsv2
+  aws-sdk-lexruntimev2
   aws-sdk-s3
   azure-storage-blob!
   barnes

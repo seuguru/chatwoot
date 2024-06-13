@@ -498,6 +498,7 @@ Rails.application.routes.draw do
   get '/swagger/*path', to: 'swagger#respond'
   get '/swagger', to: 'swagger#respond'
 
+  post 'webhooks/gurupass_bot', to: 'webhooks/gurupass_bot#create'
   # ----------------------------------------------------------------------
   # Routes for testing
   resources :widget_tests, only: [:index] unless Rails.env.production?

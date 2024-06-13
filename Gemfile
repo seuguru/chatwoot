@@ -44,7 +44,9 @@ gem 'net-smtp',  '~> 0.3.4'
 # Prevent CSV injection
 gem 'csv-safe'
 
-##-- for active storage --##
+# #-- for active storage --##
+gem 'aws-sdk-lexmodelsv2'
+gem 'aws-sdk-lexruntimev2'
 gem 'aws-sdk-s3', require: false
 # original gem isn't maintained actively
 # we wanted updated version of faraday which is a dependency for slack-ruby-client
