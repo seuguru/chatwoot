@@ -6,7 +6,7 @@ class Webhooks::GurupassBotController < ActionController::API
     conversation_id = message['conversation_id']
     inbox_id = message['inbox_id']
     account_id = message['account_id']
-    conversation = Conversation.find(conversation_id)
+    conversation = Conversation.where(display_id: conversation_id)
     phone = conversation.contact&.phone_number
 
     response = recognize_text(conversation, params['content'])
@@ -29,7 +29,7 @@ class Webhooks::GurupassBotController < ActionController::API
           event = Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
         end
       end
-      Message.create!(content: content, conversation_id: conversation_id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
+      Message.create!(content: content, conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
                       content_type: content_type, content_attributes: { items: items })
     end
   rescue Exception => e
