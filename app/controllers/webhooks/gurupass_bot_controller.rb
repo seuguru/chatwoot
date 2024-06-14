@@ -6,7 +6,7 @@ class Webhooks::GurupassBotController < ActionController::API
     conversation_id = message['conversation_id']
     inbox_id = message['inbox_id']
     account_id = message['account_id']
-    conversation = Conversation.where(display_id: conversation_id)
+    conversation = Conversation.where(display_id: conversation_id).first
     phone = conversation.contact&.phone_number
 
     response = recognize_text(conversation, params['content'])
