@@ -23,7 +23,7 @@ class Webhooks::GurupassBotController < ActionController::API
         content = msg_json['text']
         if msg_json.key?('buttons')
           content_type = 'input_select'
-          items = msg_json['buttons'].map { |button| { title: button['title'], value: button['payload'] } }
+          items = msg_json['buttons'].map { |button| { title: button['title'], value: button['value'] } }
         end
         if msg_json.key?('action') && (msg_json['action'] == 'handoff')
           event = Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
