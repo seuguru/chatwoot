@@ -7,7 +7,7 @@ class Webhooks::GurupassBotController < ActionController::API
     inbox_id = message['inbox_id']
     account_id = message['account_id']
     conversation = Conversation.where(display_id: conversation_id).first
-    phone = conversation.contact&.phone_number
+    # phone = conversation.contact&.phone_number
 
     response = recognize_text(conversation, params['content'])
 
@@ -26,15 +26,17 @@ class Webhooks::GurupassBotController < ActionController::API
           items = msg_json['buttons'].map { |button| { title: button['title'], value: button['value'] } }
         end
         if msg_json.key?('action') && (msg_json['action'] == 'handoff')
-          event = Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
+          Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
         end
+        additional_attributes = msg_json.fetch('additional_attributes', {})
       end
       Message.create!(content: content, conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
-                      content_type: content_type, content_attributes: { items: items })
+                      content_type: content_type, content_attributes: { items: items }, additional_attributes: additional_attributes)
     end
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
+    Sentry.capture_exception(e)
     raise e
   end
 
