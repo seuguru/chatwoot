@@ -14,9 +14,8 @@ class Webhooks::GurupassBotController < ActionController::API
     messages = response.messages
 
     messages.each do |msg|
-      message_params = { content: '', conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
+      message_params = { content: msg.content, conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
                          content_type: 'text' }
-
       if msg.content_type == 'CustomPayload'
         msg_json = JSON.parse(msg.content)
         message_params[:content] = msg_json['text']
