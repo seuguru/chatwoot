@@ -14,24 +14,24 @@ class Webhooks::GurupassBotController < ActionController::API
     messages = response.messages
 
     messages.each do |msg|
-      content_type = nil
-      items = []
-      content = msg.content
+      message_params = { content: '', conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
+                         content_type: 'text' }
 
       if msg.content_type == 'CustomPayload'
         msg_json = JSON.parse(msg.content)
-        content = msg_json['text']
+        message_params[:content] = msg_json['text']
         if msg_json.key?('buttons')
-          content_type = 'input_select'
+          message_params[:content_type] = 'input_select'
           items = msg_json['buttons'].map { |button| { title: button['title'], value: button['value'] } }
+          message_params[:content_attributes] = { items: items }
         end
         if msg_json.key?('action') && (msg_json['action'] == 'handoff')
           Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
         end
         additional_attributes = msg_json.fetch('additional_attributes', {})
+        message_params[:additional_attributes] = additional_attributes
       end
-      Message.create!(content: content, conversation_id: conversation.id, inbox_id: inbox_id, account_id: account_id, message_type: :outgoing,
-                      content_type: content_type, content_attributes: { items: items }, additional_attributes: additional_attributes)
+      Message.create!(message_params)
     end
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
