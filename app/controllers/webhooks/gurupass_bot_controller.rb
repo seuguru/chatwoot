@@ -40,15 +40,12 @@ class Webhooks::GurupassBotController < ActionController::API
         message_params[:additional_attributes] = additional_attributes
       end
       next if last_message&.content == message_params[:content]
+
       messages_to_send.push(message_params)
       # Message.create!(message_params)
     end
-    uniq_messages = messages_to_send.uniq{ |msg| [msg[:content], msg[:content_type]] }
-    uniq_messages.each do |msg|
-      Message.create!(message_params)
-    end
-
-    end
+    uniq_messages = messages_to_send.uniq { |msg| [msg[:content], msg[:content_type]] }
+    uniq_messages.each { |msg| Message.create!(msg) }
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
@@ -131,7 +128,7 @@ class Webhooks::GurupassBotController < ActionController::API
   end
 
   def set_team(conversation, team_id)
-    team = Current.account.teams.find_by(id: team_id)
-    conversation.update!(team: team)
+    team = Team.find_by(id: team_id)
+    conversation.update!(team: team) if team
   end
 end
