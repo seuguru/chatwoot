@@ -28,9 +28,7 @@ class Webhooks::GurupassBotController < ActionController::API
           items = msg_json['buttons'].map { |button| { title: button['title'], value: button['value'] } }
           message_params[:content_attributes] = { items: items }
         end
-        if msg_json.key?('action') && (msg_json['action'] == 'handoff')
-          Events::Base.new('conversation.bot_handoff', Time.zone.now, conversation: conversation)
-        end
+        conversation.bot_handoff! if msg_json.key?('action') && (msg_json['action'] == 'handoff')
         additional_attributes = msg_json.fetch('additional_attributes', {})
         message_params[:additional_attributes] = additional_attributes
       end
