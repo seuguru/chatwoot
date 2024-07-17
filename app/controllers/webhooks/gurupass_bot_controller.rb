@@ -29,6 +29,11 @@ class Webhooks::GurupassBotController < ActionController::API
           message_params[:content_attributes] = { items: items }
         end
         conversation.bot_handoff! if msg_json.key?('action') && (msg_json['action'] == 'handoff')
+        set_team(conversation, 1) if msg_json.key?('action') && (msg_json['action'] == 'transfer_to_b2c_team')
+        if msg_json.key?('action') && (msg_json['action'] == 'transfer_to_team') && msg_json.key?('team_id')
+          set_team(conversation,
+                   msg_json['team_id'])
+        end
         additional_attributes = msg_json.fetch('additional_attributes', {})
         message_params[:additional_attributes] = additional_attributes
       end
@@ -115,5 +120,10 @@ class Webhooks::GurupassBotController < ActionController::API
     return 'cancelled' if has_cancelled_subscription
 
     'lead'
+  end
+
+  def set_team(conversation, team_id)
+    team = Current.account.teams.find_by(id: team_id)
+    conversation.update!(team: team)
   end
 end
