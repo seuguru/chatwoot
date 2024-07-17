@@ -30,6 +30,7 @@ class Webhooks::GurupassBotController < ActionController::API
         end
         conversation.bot_handoff! if msg_json.key?('action') && (msg_json['action'] == 'handoff')
         set_team(conversation, 1) if msg_json.key?('action') && (msg_json['action'] == 'transfer_to_b2c_team')
+        set_team(conversation, 3) if msg_json.key?('action') && (msg_json['action'] == 'transfer_to_b2b_team')
         if msg_json.key?('action') && (msg_json['action'] == 'transfer_to_team') && msg_json.key?('team_id')
           set_team(conversation,
                    msg_json['team_id'])
