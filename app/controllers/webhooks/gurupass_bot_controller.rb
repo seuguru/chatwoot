@@ -8,6 +8,7 @@ class Webhooks::GurupassBotController < ActionController::API
     account_id = message['account_id']
     conversation = Conversation.where(display_id: conversation_id).first
     last_message = conversation.messages.outgoing.last
+    return unless conversation.pending?
     return if conversation.assignee_id?
 
     # phone = conversation.contact&.phone_number
