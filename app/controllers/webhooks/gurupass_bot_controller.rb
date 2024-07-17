@@ -7,6 +7,9 @@ class Webhooks::GurupassBotController < ActionController::API
     inbox_id = message['inbox_id']
     account_id = message['account_id']
     conversation = Conversation.where(display_id: conversation_id).first
+    last_message = conversation.messages.outgoing.last
+    return if conversation.assignee_id?
+
     # phone = conversation.contact&.phone_number
 
     response = recognize_text(conversation, params['content'])
@@ -30,6 +33,8 @@ class Webhooks::GurupassBotController < ActionController::API
         additional_attributes = msg_json.fetch('additional_attributes', {})
         message_params[:additional_attributes] = additional_attributes
       end
+      next if last_message&.content == message_params[:content]
+
       Message.create!(message_params)
     end
   rescue Exception => e
