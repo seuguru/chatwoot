@@ -45,7 +45,11 @@ class Webhooks::GurupassBotController < ActionController::API
       # Message.create!(message_params)
     end
     uniq_messages = messages_to_send.uniq { |msg| [msg[:content], msg[:content_type]] }
-    uniq_messages.each { |msg| Message.create!(msg) }
+    uniq_messages.each do |msg|
+      next if conversation&.reload&.recent_messages&.last&.content == msg[:content]
+
+      Message.create!(msg)
+    end
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
