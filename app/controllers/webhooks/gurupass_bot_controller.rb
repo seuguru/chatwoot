@@ -17,6 +17,7 @@ class Webhooks::GurupassBotController < ActionController::API
     # phone = conversation.contact&.phone_number
 
     response = recognize_text(conversation, params['content'])
+    Rails.logger.info response
 
     messages = response.messages
 
@@ -51,6 +52,7 @@ class Webhooks::GurupassBotController < ActionController::API
     uniq_messages.each do |msg|
       next if conversation&.reload&.recent_messages&.last&.content == msg[:content]
 
+      Rails.logger.info "Message to send: #{msg}"
       Message.create!(msg)
     end
   rescue Exception => e
