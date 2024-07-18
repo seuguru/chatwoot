@@ -2,7 +2,10 @@ class Webhooks::GurupassBotController < ActionController::API
   def create
     return if params['message_type'] == 'outgoing'
 
-    message = params.dig('conversation', 'messages').first
+    message = params.dig('conversation', 'messages').first || params.dig('messages')
+
+    return unless message
+
     conversation_id = message['conversation_id']
     inbox_id = message['inbox_id']
     account_id = message['account_id']
