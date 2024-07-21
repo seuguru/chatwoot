@@ -2,7 +2,7 @@ class Webhooks::GurupassBotController < ActionController::API
   def create
     Rails.logger.info params
     return if params['message_type'] == 'outgoing'
-    return unless ['message.created', 'message.updated'].include?(params['event'])
+    return unless %w[message_created message_updated].include?(params['event'])
 
     message = params.dig('conversation', 'messages').first || params.dig('messages')
 
