@@ -1,8 +1,8 @@
 class Webhooks::GurupassBotController < ActionController::API
   def create
+    Rails.logger.info params
     return if params['message_type'] == 'outgoing'
-    return if params['event'] != 'message.created'
-    return if params['private'] == true
+    return unless ['message.created', 'message.updated'].include?(params['event'])
 
     message = params.dig('conversation', 'messages').first || params.dig('messages')
 
@@ -15,6 +15,8 @@ class Webhooks::GurupassBotController < ActionController::API
     last_message = conversation.messages.outgoing.last
     return unless conversation.pending?
     return if conversation.assignee_id?
+    return if params['content'].blank?
+    return if params['content'] == last_message&.content
 
     # phone = conversation.contact&.phone_number
 
