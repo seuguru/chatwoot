@@ -17,6 +17,7 @@ class Webhooks::GurupassBotController < ActionController::API
     return if conversation.assignee_id?
     return if params['content'].blank?
     return if params['content'] == last_message&.content
+    return unless params['source_id']&.start_with?('wamid')
 
     # phone = conversation.contact&.phone_number
 
