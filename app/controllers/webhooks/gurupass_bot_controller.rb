@@ -54,6 +54,7 @@ class Webhooks::GurupassBotController < ActionController::API
 
       Rails.logger.info "Message to send: #{msg}"
       Message.create!(msg)
+      sleep(1)
     end
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
