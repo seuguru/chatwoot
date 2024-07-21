@@ -1,6 +1,8 @@
 class Webhooks::GurupassBotController < ActionController::API
   def create
     return if params['message_type'] == 'outgoing'
+    return if params['event'] != 'message.created'
+    return if params['private'] == true
 
     message = params.dig('conversation', 'messages').first || params.dig('messages')
 
