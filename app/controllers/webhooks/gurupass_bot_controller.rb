@@ -45,6 +45,7 @@ class Webhooks::GurupassBotController < ActionController::API
           set_team(conversation,
                    msg_json['team_id'])
         end
+        conversation.add_labels(msg_json['label']) if msg_json.key?('action') && msg_json['action'] == 'add_label' && msg_json.key?('label')
         additional_attributes = msg_json.fetch('additional_attributes', {})
         message_params[:additional_attributes] = additional_attributes
       end
@@ -59,7 +60,7 @@ class Webhooks::GurupassBotController < ActionController::API
 
       Rails.logger.info "Message to send: #{msg}"
       Message.create!(msg)
-      sleep(1)
+      sleep(0.5)
     end
   rescue Exception => e
     Rails.logger.error "Erro: #{e.message}"
