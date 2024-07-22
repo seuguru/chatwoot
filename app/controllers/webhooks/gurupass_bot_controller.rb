@@ -111,8 +111,9 @@ class Webhooks::GurupassBotController < ActionController::API
   end
 
   def find_user_by_phone(phone)
+    phone_formatted = phone.gsub('+55', '')
     base_url = ENV.fetch('ADMIN_URL', nil)
-    url = "#{base_url}/users/filter?filter[0][value]=#{phone}&filter[0][path]=phone&filter[0][type]=string&select=id name cpf email phone paymentForm toDeleteAt"
+    url = "#{base_url}/users/filter?filter[0][value]=#{phone_formatted}&filter[0][path]=phone&filter[0][type]=string&select=id name cpf email phone paymentForm toDeleteAt"
     headers = {
       'Authorization': "Bearer #{admin_token}",
       'Content-Type': 'application/json'
