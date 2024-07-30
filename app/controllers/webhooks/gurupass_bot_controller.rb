@@ -13,10 +13,13 @@ class Webhooks::GurupassBotController < ActionController::API
     account_id = message['account_id']
     conversation = Conversation.where(display_id: conversation_id).first
     last_message = conversation.messages.outgoing.last
+    return unless conversation
     return unless conversation.pending?
     return if conversation.assignee_id?
+    return if conversation.team_id?
+    return if conversation.label_list.include?('desligar-bot')
     return if params['content'].blank?
-    return if params['content'] == last_message&.content
+    # return if params['content'] == last_message&.content
     return unless params['source_id']&.start_with?('wamid')
 
     # phone = conversation.contact&.phone_number
