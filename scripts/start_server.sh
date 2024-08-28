@@ -1,10 +1,5 @@
 #!/bin/bash
-
-if [ -f "$HOME/.bash_profile" ]; then
-  source "$HOME/.bash_profile"
-elif [ -f "$HOME/.bashrc" ]; then
-  source "$HOME/.bashrc"
-fi
+source "$HOME/.bashrc"
 rvm use 3.3.3
 nvm use 20.15
 cd /home/ubuntu/chatbot || exit
