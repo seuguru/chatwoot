@@ -24,6 +24,9 @@ else
   exit 1
 fi
 
+sudo chown -R ubuntu:ubuntu /home/ubuntu/chatbot
+sudo chmod -R u+w /home/ubuntu/chatbot
+
 rvm use 3.3.3
 nvm use 20.15
 bundle install
