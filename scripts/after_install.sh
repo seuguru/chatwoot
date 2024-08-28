@@ -8,5 +8,6 @@ elif [ -f "$HOME/.bashrc" ]; then
 fi
 
 rvm use 3.3.3
+nvm use 20.15
 bundle install
 yarn install

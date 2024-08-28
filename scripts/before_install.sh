@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get -y install nginx
-sudo apt-get install -y curl gpg build-essential
+sudo apt-get install -y curl gpg build-essential postgresql-client libpq-dev
 
 # Verifica se o RVM está instalado
 

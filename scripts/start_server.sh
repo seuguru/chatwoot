@@ -1,5 +1,12 @@
 #!/bin/bash
-source ~/.rvm/scripts/rvm
+
+if [ -f "$HOME/.bash_profile" ]; then
+  source "$HOME/.bash_profile"
+elif [ -f "$HOME/.bashrc" ]; then
+  source "$HOME/.bashrc"
+fi
+rvm use 3.3.3
+nvm use 20.15
 cd /home/ubuntu/chatbot || exit
 export RAILS_ENV=production
 export PORT=4001
