@@ -3,6 +3,34 @@ sudo apt-get update
 sudo apt-get -y install nginx
 sudo apt-get install -y curl gpg build-essential postgresql-client libpq-dev
 
+NODE_VERSION="20.15.0"
+# Instalar Node.js 20.12.x se não estiver instalado
+if ! node -v | grep -q "v20.12."; then
+  curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+fi
+
+# Instalar NVM se não estiver instalado
+if [ ! -d "$HOME/.nvm" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+fi
+
+# Carregar NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Instalar e usar a versão necessária do Node.js
+nvm install $NODE_VERSION
+nvm use $NODE_VERSION
+
+# Instalar Yarn se não estiver instalado
+if ! yarn -v &>/dev/null; then
+  npm install -g yarn
+fi
+
 # Verifica se o RVM está instalado
 
 FILE="~/.rvm/scripts/rvm"

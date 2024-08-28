@@ -8,6 +8,8 @@ fi
 rvm use 3.3.3
 nvm use 20.15
 cd /home/ubuntu/chatbot || exit
+sudo chown -R ubuntu:ubuntu /home/ubuntu/chatbot
+sudo chmod -R u+w /home/ubuntu/chatbot
 export RAILS_ENV=production
 export PORT=4001
 source ./scripts/set_env.sh
