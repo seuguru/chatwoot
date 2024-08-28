@@ -9,9 +9,10 @@ if ! rvm -v &>/dev/null; then
 fi
 
 source ~/.rvm/scripts/rvm
-
-if ! rvm list strings | grep -q "ruby-3.3.3"; then
-  rvm install 3.3.3
+RUBY_VERSION="3.3.3"
+if rvm list strings | grep -q "$RUBY_VERSION"; then
+  echo "Ruby $RUBY_VERSION is already installed."
 else
-  echo "Ruby 3.3.3 is already installed."
+  echo "Ruby $RUBY_VERSION is not installed. Installing now..."
+  rvm install "$RUBY_VERSION"
 fi
