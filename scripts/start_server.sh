@@ -15,7 +15,9 @@ kill_process_by_name "sidekiq"
 nohup bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV >./log/production.log 2>&1 &
 nohup bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml -e $RAILS_ENV >./log/sidekiq.log 2>&1 &
 
-sleep 5
+echo "Checking if Rails server and Sidekiq are running..."
+sleep 1m
+echo "Start checking if Rails server and Sidekiq are running..."
 
 if netstat -tuln | grep ":$PORT" >/dev/null; then
   echo "Rails server started successfully on port $PORT."
