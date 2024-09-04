@@ -34,7 +34,7 @@ workers ENV.fetch('WEB_CONCURRENCY', 0)
 #
 preload_app!
 
-stdout_redirect '/home/ubuntu/chatbot/log/puma.stdout.log', '/home/ubuntu/chatbot/log/puma.stderr.log', true
+# stdout_redirect '/home/ubuntu/chatbot/log/puma.stdout.log', '/home/ubuntu/chatbot/log/puma.stderr.log', true
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
