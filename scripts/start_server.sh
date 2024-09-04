@@ -12,7 +12,24 @@ bundle exec rails db:migrate
 bundle exec rails assets:precompile
 kill_process_on_port $PORT
 kill_process_by_name "sidekiq"
-bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV >./log/production.log 2>&1 &
-bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml -e $RAILS_ENV >./log/sidekiq.log 2>&1 &
+nohup bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV >./log/production.log 2>&1 &
+nohup bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml -e $RAILS_ENV >./log/sidekiq.log 2>&1 &
+
+sleep 5
+
+if netstat -tuln | grep ":$PORT" >/dev/null; then
+  echo "Rails server started successfully on port $PORT."
+else
+  echo "Failed to start Rails server on port $PORT."
+  exit 1
+fi
+
+# Check if Sidekiq is running
+if ps aux | grep sidekiq | grep -v grep >/dev/null; then
+  echo "Sidekiq started successfully."
+else
+  echo "Failed to start Sidekiq."
+  exit 1
+fi
 
 echo "Deployment script completed."
