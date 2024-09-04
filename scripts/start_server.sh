@@ -12,6 +12,5 @@ bundle exec rails db:migrate
 bundle exec rails assets:precompile
 kill_process_on_port $PORT
 kill_process_by_name "sidekiq"
-# bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV
-bundle exec puma -C config/puma.rb
-bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml
+bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV >./log/production.log 2>&1 &
+bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml -e $RAILS_ENV >./log/sidekiq.log 2>&1 &
