@@ -1,13 +1,12 @@
 #!/bin/bash
 
-rvm use 3.3.3
-nvm use 20.15
-
 cd /home/ubuntu/chatbot || exit
 export RAILS_ENV=production
 export PORT=4001
 source ./scripts/set_version_manager.sh
 source ./scripts/set_env.sh
+rvm use 3.3.3
+nvm use 20.15
 
 bundle exec rails db:migrate
 bundle exec rails assets:precompile
