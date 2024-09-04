@@ -35,3 +35,4 @@ else
 fi
 
 echo "Deployment script completed."
+exit 0
