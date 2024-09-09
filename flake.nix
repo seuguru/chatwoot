@@ -22,7 +22,7 @@
           name = "rails-dev-shell";
 
           buildInputs = [
-            nixpkgs-ruby.packages.aarch64-darwin."ruby-3.2.5"
+            nixpkgs-ruby.packages.aarch64-darwin."ruby-3.3.3"
             pkgs.libyaml
             pkgs.nodejs              # Node.js for Rails asset pipeline
             pkgs.yarn                # Yarn package manager
